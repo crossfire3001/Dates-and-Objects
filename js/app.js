@@ -66,11 +66,11 @@ let newClient = {
 
 // 1.
 
-let fullName = (clients) => {
-    return clients.firstName + ' ' + clients.lastName;
-}
+let fullName = (client) => {
+    return client.firstName + ' ' + client.lastName;
+};
 
-let checkFullName = fullName(clients[0]);
+//let checkFullName = fullName(clients[0]);
 //console.log(checkFullName);
 
 // 2.
@@ -88,11 +88,122 @@ let getBirthday = (date) => {
     const today = new Date();
 
     if (today.getDate() === birthday.getDate() && today.getMonth() === birthday.getMonth()) {
-        result += " (сегодня)";
+        result += ' (сегодня)';
     }
     return result;
+};
+
+let b = getBirthday(clients[0].date);
+console.log(b); // 29 ноября
+
+// 3.
+let getAllAmount = (totalSum) => {
+    let sum= 0;
+    for (let i = 0; i < totalSum.length; i++) {
+        sum += totalSum[i];
+    }
+    return sum;
+};
+
+//console.log((getAllAmount(clients[0].amounts)));
+
+// 4.
+
+let getAverageAmount = (totalArray) => {
+    let sum = 0;
+
+        for(let i = 0; i < totalArray.length; i++) {
+            sum += totalArray[i];
+        }
+        let averageSum = sum / totalArray.length;
+        averageSum.toFixed();
+        return averageSum;
+};
+
+// console.log((getAverageAmount(clients[0].amounts)));
+
+// 5. Удалите все временные вызовы функций для проверок их результата.
+
+// 6.
+/* let showClients = (clients) => {
+    clients.forEach((client) => {
+
+        let message = 'Клиент ' + fullName(client) + ' имеет среднюю сумму чека ' +
+            getAverageAmount(client.amounts).toFixed() + ' рублей. ' + 'День рождение клиента: '
+            + getBirthday(client.date);
+        console.log(message);
+    });
+}; */
+
+// 7. Вызовите функцию showClients для всего массива объектов клиентов clients.
+// Проверьте вывод в консоль – вы должны получить информацию по каждому из имеющихся клиентов в объекте clients.
+
+//showClients(clients);
+
+// 8.
+try {
+    showClients();
+} catch (error) {
+    console.log('Вызвана функция без параметров');
+    console.log('Ошибка: ' + error.message);
 }
 
-let b = getBirthday('08-27-1987');
-console.log(b);
+// 9.
+let bestClients = [
+    {
+        firstName: 'Юлисей',
+        lastName: 'Данчук',
+        date: '10-13-1950',
+        phone: 89299889009,
+        amounts: [254, 98, 3764, 5266]
+    },
+    {
+        firstName: 'Нанотолий',
+        lastName: 'Грищенко',
+        date: '05-20-1981',
+        phone: null,
+        amounts: [1563, 887, 1889]
+    },
+];
 
+let showClients = (clients) => {
+    clients.forEach((client) => {
+
+        let message = 'Клиент ' + fullName(client) + ' имеет среднюю сумму чека ' +
+            getAverageAmount(client.amounts).toFixed() + ' рублей. ' + 'День рождение клиента: '
+            + getBirthday(client.date);
+        console.log(message);
+    });
+};
+
+
+
+// 10.
+/* setTimeout(() => {
+    showClients(bestClients);
+}, 3000) */
+
+
+// 11.
+let whoSpentMore = (clients) => {
+    let max = 0;
+    let clientWithMaxSpent = null;
+
+    clients.forEach((client) => {
+        let totalAmount = getAllAmount(client.amounts);
+
+        if (totalAmount > max) {
+            max = totalAmount;
+            clientWithMaxSpent = client;
+        }
+    });
+
+    if (clientWithMaxSpent) {
+        let name = fullName(clientWithMaxSpent);
+        console.log('Больше всех потратил ' + name + ' ' + ' Сумма покупок: ' + max);
+    } else {
+        console.log("Нет данных о клиентах");
+    }
+};
+
+whoSpentMore(clients);
